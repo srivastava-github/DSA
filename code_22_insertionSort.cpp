@@ -2,35 +2,38 @@
 
 using namespace std;
 
-void printArr(int arr[], int n){
-    for(int i=0;i<n;i++){
-        cout<<arr[i]<<" ";
+void printVect(vector<int>&v){
+    for(int i=0;i<v.size();i++){
+        cout<<v[i]<<" ";
     }
     cout<<endl;
 }
 
-void insertionSort(int arr[], int n){
-    int i=1;
-    while(i<n){
-        int temp = arr[i], j=i;
-        while(j>0 && arr[j-1]>temp){
-            arr[j]=arr[j-1];
-            j--;
-        }
-        arr[j]=temp;
-        i++;
-        }
+void insertionSort (vector<int> &v,int size){
+    if(size==1){
+        return;
+    }
+    insertionSort(v , size-1);
+    int i=size-1,temp;
+    temp=v[i];
+    while(i>0 && v[i-1]>temp ){
+        v[i]=v[i-1];
+        i--;
+    }
+    v[i]=temp;
+    cout<<"Iteration "<<size-1 <<" : ";
+    printVect(v);
 }
 
 int main() {
-    int arr[1000],n;
-    cout<<"Enter size of array : ";
+    int n;
     cin>>n;
-    cout<<"Enter the elements :"<<endl;
+    vector<int>v(n);
     for(int i=0;i<n;i++){
-        cin>>arr[i];
+        cin>>v[i];
     }
-    insertionSort(arr,n);
-    printArr(arr,n);
+    insertionSort(v,n);
+    cout<<"Final : ";
+    printVect(v);
     return 0;
 }

@@ -2,60 +2,57 @@
 
 using namespace std;
 
-int firstOccurance(int arr[], int size, int key){
-    int start=0,end=size-1,ans=-1;
-    int mid = start + (end-start)/2;
-    while(start<=end){
-        if(arr[mid]==key){
-            ans=mid;
-            end=mid-1;
-        }
-        else if(arr[mid]>key){
-            end=mid-1;
-        }
-        else{
-            start=mid+1;
-        }
-        mid = start + (end-start)/2;
+int firstOcc(vector<int>& v, int key, int s, int e) {
+    // Base case: when start index exceeds end index
+    if (s > e) {
+        return -1;
     }
-    return ans;
+
+    // Locating the middle element
+    int m = s + (e - s) / 2;
+
+    // Check if the middle element is the first occurrence
+    if (v[m] == key && (m == 0 || v[m - 1] != key)) {
+        return m;
+    } else if (v[m] >= key) {
+        // Search in the left half
+        return firstOcc(v, key, s, m - 1);
+    } else {
+        // Search in the right half
+        return firstOcc(v, key, m + 1, e);
+    }
 }
 
-int lastOccurance(int arr[], int size, int key){
-    int start=0,end=size-1,ans=-1;
-    int mid = start + (end-start)/2;
-    while(start<=end){
-        if(arr[mid]==key){
-            ans=mid;
-            start=mid+1;
-        }
-        else if(arr[mid]>key){
-            end=mid-1;
-        }
-        else{
-            start=mid+1;
-        }
-        mid = start + (end-start)/2;
+int lastOcc(vector<int>& v, int key, int s, int e) {
+    // Base case: when start index exceeds end index
+    if (s > e) {
+        return -1;
     }
-    return ans;
-}
 
+    // Locating the middle element
+    int m = s + (e - s) / 2;
+
+    // Check if the middle element is the last occurrence
+    if (v[m] == key && (m == v.size() - 1 || v[m + 1] != key)) {
+        return m;
+    } else if (v[m] > key) {
+        // Search in the left half
+        return lastOcc(v, key, s, m - 1);
+    } else {
+        // Search in the right half
+        return lastOcc(v, key, m + 1, e);
+    }
+}
 
 int main() {
-
-    int arr[1000],n,key,fo,lo;
-    cout<<"Enter the size of array : ";
-    cin>>n;
-    cout<<"Enter the sorted array : "<<endl;
-    for(int i=0;i<n;i++){
-        cin>>arr[i];
+    int n, key;
+    cin >> n;
+    vector<int> v(n);
+    for (int i = 0; i < n; i++) {
+        cin >> v[i];
     }
-    cout<<"Enter the value for key : ";
-    cin>>key;
-    fo=firstOccurance(arr,n,key);
-    lo=lastOccurance(arr,n,key);
-    cout<<"The first occurance of "<<key<<" is at "<<fo<<" index"<<endl;
-    cout<<"The last occurance of "<<key<<" is at "<<lo<<" index"<<endl;
-    
+    cin >> key;
+    cout << "First Occurrence is at index: " << firstOcc(v, key, 0, n - 1) << endl;
+    cout << "Last Occurrence is at index: " << lastOcc(v, key, 0, n - 1) << endl;
     return 0;
 }

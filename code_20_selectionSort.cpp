@@ -2,41 +2,41 @@
 
 using namespace std;
 
-void printArr(int arr[], int n){
-    for(int i=0;i<n;i++){
-        cout<<arr[i]<<" ";
+void printVect(vector<int>&v){
+    for(int i=0;i<v.size();i++){
+        cout<<v[i]<<" ";
     }
     cout<<endl;
 }
 
-int findMin(int arr[],int s, int e){
-    int min=INT_MAX, in=-1;
-    for(int i=s;i<=e;i++){
-        if(arr[i]<min){
-            min=arr[i];
-            in=i;
+int findMin(vector<int>&v, int start){
+    int min=INT_MAX,index=-1;
+    for(int i=start;i<v.size();i++){
+        if(v[i]<min){
+            min=v[i];
+            index=i;
         }
     }
-    return in;
+    return index;
 }
 
-void selectionSort(int arr[], int n){
-    int in=-1;
-    for(int i=0;i<n-1;i++){
-        in=findMin(arr,i,n-1);
-        swap(arr[i],arr[in]);
+void selectionSort (vector<int> &v,int itr=0){
+    if(itr>=v.size()-1){
+        return;
     }
+    int minIndex = findMin(v,itr);
+    swap(v[itr],v[minIndex]);
+    selectionSort(v,itr+1);
 }
 
 int main() {
-    int arr[1000],n;
-    cout<<"Enter size of array : ";
+    int n;
     cin>>n;
-    cout<<"Enter the elements :"<<endl;
+    vector<int>v(n);
     for(int i=0;i<n;i++){
-        cin>>arr[i];
+        cin>>v[i];
     }
-    selectionSort(arr,n);
-    printArr(arr,n);
+    selectionSort(v);
+    printVect(v);
     return 0;
 }

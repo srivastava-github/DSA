@@ -2,35 +2,38 @@
 
 using namespace std;
 
-void printArr(int arr[], int n){
-    for(int i=0;i<n;i++){
-        cout<<arr[i]<<" ";
+void printVect(vector<int>&v){
+    for(int i=0;i<v.size();i++){
+        cout<<v[i]<<" ";
     }
     cout<<endl;
 }
 
-void bubbleSort(int arr[], int n){
-    bool s=true;
-    for(int j=n-1;j>0 && s;j--){
-        s=false;
-        for(int i=0;i<j;i++){
-            if(arr[i]>arr[i+1]){
-                swap(arr[i],arr[i+1]);
-                s=true;
-            }
+void bubbleSort (vector<int> &v,int size){
+    if(size==1){
+        return;
+    }
+    bool Sorted = true;
+    for(int i=0;i<size-1;i++){
+        if(v[i]>v[i+1]){
+            swap(v[i],v[i+1]);
+            Sorted = false;
         }
     }
+    if(Sorted){
+        return;
+    }
+    bubbleSort(v, size-1);
 }
 
 int main() {
-    int arr[1000],n;
-    cout<<"Enter size of array : ";
+    int n;
     cin>>n;
-    cout<<"Enter the elements :"<<endl;
+    vector<int>v(n);
     for(int i=0;i<n;i++){
-        cin>>arr[i];
+        cin>>v[i];
     }
-    bubbleSort(arr,n);
-    printArr(arr,n);
+    bubbleSort(v,n);
+    printVect(v);
     return 0;
 }
